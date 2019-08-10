@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Author: Kelves Costa <xxxx@xxxx>
+# License: Public Domain
+# Version: 0.3-alpha
+# Description: Simple script to realod sxhkd new configuration
+
+# lookup for sxhkd and exits if false
+pgrep -i sxhkd > /dev/null 2> /dev/null || exit 1 
+# kill all running sxhkd instances
+killall sxhkd 
+# executes a single and new instance of the deamon
+exec setsid sxhkd > $(mktemp -q -t sxhkd.XXXXXX) &  
+# sucess exit status returned
+exit 0  
