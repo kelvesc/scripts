@@ -11,19 +11,21 @@
 # Check for running dmenu and exit if it is true, for avoiding conflict
 pgrep -x dmenu && exit 1
 
-drive=$(lsblk -nlp | grep -v "sda" | tee >(grep "part $") >(grep "disk $") >/dev/null | awk '{print $1 " ( " $4 " ) "}')
+#drive=$(lsblk -nlp | grep -v "sda" | tee >(grep "part $") >(grep "disk $") >/dev/null | awk '{print $1 " ( " $4 " ) "}')
+
+drive=$(lsblk -nlp | grep -e " 1 " | awk '{print $1 " ( " $4 " ) "}')
 
 if [ -z "$drive" ]
 then
   echo "No media avaliable" | dmenu && exit 2
 else
-  selected=$(echo $drive  | rofi -dmenu -i -p "Select the media: " | awk '{print $1}')
+  selected=$(echo -e "$drive"  | rofi -dmenu -i -p "Select the media" | awk '{print $1}')
   if [ -z "$selected" ]
   then
     echo "No media selected" | dmenu && exit 3
   else
     dirs=$(find /media -maxdepth 3 -type d 2>/dev/null)
-    mountpoint=$(echo $dirs | rofi -dmenu -i -p "Select mount point: ")
+    mountpoint=$(echo -e "$dirs" | rofi -dmenu -i -p "Select mount point: ")
     if [ -z "$mountpoint" ] 
     then
       echo "No mount point selected" | dmenu && exit 4
