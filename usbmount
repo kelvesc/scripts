@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Author: Kelves C. <>
+# Version: 0.5-beta
+# License: MIT
+# Description:
+# In short the script scans for a new patition not yet mounted, in case it does not find one it 
+# searches for a new disk, and store its path in a variable, asks the user for a place to mount the media
+# if the path does not exist it asks for permission to creat it and then mount the media in the right place
+
+# Check for running dmenu and exit if it is true, for avoiding conflict
+pgrep -x dmenu && exit 1
+
+#drive=$(lsblk -nlp | grep -v "sda" | tee >(grep "part $") >(grep "disk $") >/dev/null | awk '{print $1 " ( " $4 " ) "}')
+
+drive=$(lsblk -nlp | grep -e " 1 " | awk '{print $1 " ( " $4 " ) "}')
+
+if [ -z "$drive" ]
+then
+  echo "No media avaliable" | dmenu && exit 2
+else
+  selected=$(echo -e "$drive"  | rofi -dmenu -i -p "Select the media" | awk '{print $1}')
+  if [ -z "$selected" ]
+  then
+    echo "No media selected" | dmenu && exit 3
+  else
+    dirs=$(find /media -maxdepth 3 -type d 2>/dev/null)
+    mountpoint=$(echo -e "$dirs" | rofi -dmenu -i -p "Select mount point: ")
+    if [ -z "$mountpoint" ] 
+    then
+      echo "No mount point selected" | dmenu && exit 4
+    else
+      if [ -e "$mounpoint" ] # if [ ! -d "$mounpoint" ]
+      then
+         mkpoint=$(echo -e "NO\nYes" | rofi -dmenu -i -p "$mountpoint doesn't exist. Creat it? ")
+        if [ "$mkpoint" = "Yes" ]
+        then
+         sudo mkdir -p "$mountpoint"
+        fi  # mkpoint
+      fi  # mountpoint ! -d
+    fi  # mountpoint -z
+  fi  # selected
+fi  # drive
+sudo mount $selected $mountpoint
+

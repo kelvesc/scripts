@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Author: Kelves C.
+# Version: 0.6.0-beta (usable)
+# License: Public Domain
+# Description: 
+# This script has the intent to search through the sub tree
+# of the main directory where the papers are stored and 
+# then launch a pdf reader with the selected paper
+
+#targetDir=
+#targetFile=
+while true;do
+  targetFile=$(find /mnt /media -type f -name *.pdf | fzf) 
+  if [ -f "$targetFile" ];then
+    # Initializes the pdfreader program
+  	zathura "$targetFile" &
+    break
+  elif [ ! -e "$targetFile" ];then
+  	    exit 1
+  else
+  targetDir="$targetFile"
+fi
+done # -d $targetFile 
+exit

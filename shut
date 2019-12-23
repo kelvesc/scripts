@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+#Author: Kelves C.
+#License: Public Domain
+#Version: 0.5.0-beta
+#Description: this script has the intent to do a summary of system shutdown actions and then ask the user for the action to take
+#Through permited action and by using dmenu/rofi we plan to do a fuuny script
+
+#TODO: a ncurses alternative to non-X instances, and a autoselect section where it decides alone wheter it is to run either one of the X or non-X options.
+buttom_1=$(echo "Poweroff")
+buttom_2=$(echo "Reboot")
+buttom_3=$(echo "Halt System")
+buttom_4=$(echo "Suspend")
+buttom_5=$(echo "Hibernate")
+
+# rofi dmenu options explained:
+# -p is for the prompt, the default is "dmenu"
+# -i is for case insensitive
+# -u is for the nth column be urgent
+
+action=$(echo "$buttom_1\n$buttom_2\n$buttom_3\n$buttom_4\n$buttom_5" | \
+  rofi -theme Pop-Dark -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")
+
+case "$action" in
+  [Pp]oweroff)
+    sudo poweroff;;
+  [Rr]eboot)
+    sudo reboot;;
+  [Hh]alt\ system)
+    sudo halt;;
+  [Ss]uspend)
+    sudo zzz;;
+  [Hh]ibernate)
+    sudo ZZZ;;
+  *)
+    break;;
+esac
+
+
