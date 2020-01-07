@@ -12,7 +12,13 @@ setxkbmap br -variant abnt2 2> $TMPDIR/setxkbmap.log &
 xrdb $HOME/.Xresources 2> $TMPDIR/xrdb.log &
 [ $(pgrep urxvtd) ] || urxvtd -q -o -f &
 [ $(pgrep -x xbanish) ] || setsid xbanish &
-([ $(pgrep ranmoize-bg)] && killall ramdomize-bg) || randomize-bg 2> $TMPDIR/wall.log &
-compton --config=$XDG_CONFIG_HOME/compton/compton.conf 2> $TMPDIR/compton.log &
+([ $(pgrep ranmoize-bg)] && killall ramdomize-bg) || randomize-bg \
+    2> $TMPDIR/wall.log &
+compton --config=$XDG_CONFIG_HOME/compton/compton.conf \
+    2> $TMPDIR/compton.log &
+#FIXME: conky should run after compton is running
+#TODO: make some waits here and there
+#pid=$!
+#wait $pid && conky &
 conky &
 
