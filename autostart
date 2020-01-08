@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/env sh
 
 # Author: Kelves C.
-# Version: 0.7
+# Version: 0.8
 # License: Public Domain
 # Description:
 # A simple script for wrapping all programs that need to be running 
@@ -10,15 +10,18 @@
 setxkbmap br -variant abnt2 2> $TMPDIR/setxkbmap.log &
 #xscreensaver -no-splash 2> $TMPDIR/xscreensaver.log &
 xrdb $HOME/.Xresources 2> $TMPDIR/xrdb.log &
+PID_OF_XRDB=$!
 [ $(pgrep urxvtd) ] || urxvtd -q -o -f &
 [ $(pgrep -x xbanish) ] || setsid xbanish &
 ([ $(pgrep ranmoize-bg)] && killall ramdomize-bg) || randomize-bg \
     2> $TMPDIR/wall.log &
 compton --config=$XDG_CONFIG_HOME/compton/compton.conf \
     2> $TMPDIR/compton.log &
+PID_OF_COMPTON=$!
 #FIXME: conky should run after compton is running
 #TODO: make some waits here and there
-#pid=$!
-#wait $pid && conky &
-conky &
-
+if ps -p $PID_OF_COMPTON >/dev/null;then
+    sleep 1
+    conky &
+    unset $PID_OF_COMPTON
+fi
