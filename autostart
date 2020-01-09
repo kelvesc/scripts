@@ -11,18 +11,25 @@
 setxkbmap br -variant abnt2 2> $TMPDIR/setxkbmap.log &
 #xscreensaver -no-splash 2> $TMPDIR/xscreensaver.log &
 xrdb $HOME/.Xresources 2> $TMPDIR/xrdb.log &
-#PID_OF_XRDB=$!
-[ $(pgrep urxvtd) ] || urxvtd -q -o -f &
+#Pid_of_xrdb=$!
 [ $(pgrep -x xbanish) ] || setsid xbanish &
+
+[ $(pgrep urxvtd) ] || urxvtd -q -o -f &
+
 ([ $(pgrep ranmoize-bg)] && killall ramdomize-bg) || randomize-bg \
     2> $TMPDIR/wall.log &
+
 compton --config=$XDG_CONFIG_HOME/compton/compton.conf \
     2> $TMPDIR/compton.log &
-PID_OF_COMPTON=$!
-#FIXME: conky should run after compton is running
-#TODO: make some waits here and there
-if ps -p $PID_OF_COMPTON >/dev/null;then
+Pid_of_Compton=$!
+
+if ps -p $Pid_of_Compton >/dev/null;then
     sleep 1
     conky > /dev/null &
-    unset $PID_OF_COMPTON
 fi
+
+if ps -p $Pid_of_Compton > /dev/null;then
+    bar &
+fi
+
+unset $Pid_of_Compton
