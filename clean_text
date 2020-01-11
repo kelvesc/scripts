@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# TODO:
+#   help message
+#   change this to a multi option script
+
 # In [:print:] includes:
 #   [:alnum:] : alpha-numerics
 #   [:punct:] : punctuations
@@ -18,6 +22,9 @@
 
 # Many other good examples can be found in stackoverflow
 
-tr -dC '[:print:]\t\n' \
-    |sed '/^$/d' \
-    > text.new
+#tr -dC '[:print:]\t\n' \
+#    | sed '/^$/d'
+tr -C '[:print:]\t\n' '\n' \
+    | sed '/^$/d'
+
+#sed 's/[[:print:]]\t\n/\n/g; /^$/d;'
