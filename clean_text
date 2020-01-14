@@ -27,4 +27,3 @@
 tr -C '[:print:]\t\n' '\n' \
     | sed '/^$/d'
 
-#sed 's/[[:print:]]\t\n/\n/g; /^$/d;'
