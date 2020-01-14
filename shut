@@ -4,12 +4,13 @@
 #License: Public Domain
 #Version: 0.5.0-beta
 #Description: this script has the intent to do a summary of system shutdown actions and then ask the user for the action to take
-#Through permited action and by using dmenu/rofi we plan to do a fuuny script
 
-#TODO: a ncurses alternative to non-X instances, and a autoselect section where it decides alone wheter it is to run either one of the X or non-X options.
+#TODO: a ncurses alternative to non-X instances.
+#TODO: decides alone wheter it is to run either one of the X or non-X options.
+
 buttom_1=$(echo "Poweroff")
 buttom_2=$(echo "Reboot")
-buttom_3=$(echo "Halt System")
+buttom_3=$(echo "Halt")
 buttom_4=$(echo "Suspend")
 buttom_5=$(echo "Hibernate")
 
@@ -35,5 +36,4 @@ case "$action" in
   *)
     break;;
 esac
-
 
