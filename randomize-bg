@@ -14,8 +14,9 @@
 wallDir=/usr/share/wallpapers
 
 #echo "$$" > $TMPDIR/walltoken
-#trap 'echo "recieved signal"' 10
-#trap 'echo "recieved signal"' 12 
+# These signal must be sent to the pid of sleep, not randomize-bg
+trap 'setBackground' 10
+trap 'setBackground' 12 
 
 # Set the wallpaper filling the screen and without a ".fehbg" file
 setBackground() {
