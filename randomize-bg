@@ -1,19 +1,17 @@
 #!/bin/sh
 
 # Author: Kelves C.
-# Version: 0.8.0-beta
+# Version: 0.9.0-beta
 # License: Public Domain
 # Description:
-# This script sets a background and then randomizes
-# a new one after a couple minutes.
+# Sets a background and then randomizes a new one after a couple minutes.
 # TODO:
-# The ideia here is very simple. There is a FIFO where whom this process listen to and sets the wallpapers according to it.
-# This means this script must be able to both listen to signal and stop working and send a signal to other similar runnign process.
+# A FIFO where whom this process listen to and sets the wallpapers accordingly.
+# This script must be able to listen and send signals from and to others of it.
 
 # Wallpapers directory
 wallDir=/usr/share/wallpapers
 
-#echo "$$" > $TMPDIR/walltoken
 # These signal must be sent to the pid of sleep, not randomize-bg
 trap 'setBackground' 10
 trap 'setBackground' 12 
