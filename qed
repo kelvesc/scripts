@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# QED: quick edit for the main config file
+# Version: 0.1
+
+case $1 in
+    vim)        file=$HOME/.config/nvim/init.vim ;;
+    bspwm)      file=$HOME/.config/bspwm/bspwmrc ;;
+    sxhkd)      file=$HOME/.config/sxhkd/sxhkdrc ;;
+    *)          exit 1 ;;
+esac
+
+vim "$file"
