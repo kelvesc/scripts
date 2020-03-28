@@ -1,26 +1,24 @@
 #!/bin/env sh
 
 # Author: Kelves C.
-# Version: 0.8
+# Version: 0.9
 # License: Public Domain
 # Description:
-# A simple script for wrap all programs
-# that compose the working evironment 
+# Wrap up script to start all programs that compose the work evironment 
 # when the xsession starts
 
-setxkbmap br -variant abnt2 2> $TMPDIR/setxkbmap.log &
-#xscreensaver -no-splash 2> $TMPDIR/xscreensaver.log &
-xrdb $HOME/.Xresources 2> $TMPDIR/xrdb.log &
-#Pid_of_xrdb=$!
+kblayer 2> $(mktemp -t kblayer.log.XXX) &
+xrdb $HOME/.Xresources 2> $(mktemp -t xrdb.log.XXX) &
+
 [ $(pgrep -x xbanish) ] || setsid xbanish &
 
 [ $(pgrep urxvtd) ] || urxvtd -q -o -f &
 
 ([ $(pgrep ranmoize-bg)] && killall ramdomize-bg) || randomize-bg \
-    2> $TMPDIR/wall.log &
+    2> $(mktemp -t wall.log.XXX) &
 
 compton --config=$XDG_CONFIG_HOME/compton/compton.conf \
-    2> $TMPDIR/compton.log &
+    2> $(mktemp -t compton.log.XXX) &
 Pid_of_Compton=$!
 
 if ps -p $Pid_of_Compton >/dev/null;then
