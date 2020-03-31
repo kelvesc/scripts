@@ -27,7 +27,7 @@ case "$action" in
     sudo poweroff;;
   [Rr]eboot)
     sudo reboot;;
-  [Hh]alt\ system)
+  [Hh]alt)
     sudo halt;;
   [Ss]uspend)
     sudo zzz;;
