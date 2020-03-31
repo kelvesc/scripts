@@ -7,6 +7,7 @@ case $1 in
     vim)        file=$HOME/.config/nvim/init.vim ;;
     bspwm)      file=$HOME/.config/bspwm/bspwmrc ;;
     sxhkd)      file=$HOME/.config/sxhkd/sxhkdrc ;;
+    mksh)       file=$HOME/.mkshrc ;;
     *)          exit 1 ;;
 esac
 
