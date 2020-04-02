@@ -8,8 +8,9 @@
 # lookup for sxhkd and exits if false
 pgrep -i sxhkd > /dev/null 2> /dev/null || exit 1 
 # kill all running sxhkd instances
-kill sxhkd 
+kill $(pidof sxhkd)
 # executes a single and new instance of the deamon
-exec setsid sxhkd > $(mktemp -q -t sxhkd.XXX) &  
+exec setsid sxhkd -c "$XDG_CONFIG_HOME/sxhkd/sxhkdrc" \
+    > $(mktemp -q -t sxhkd.XXX) &  
 # sucess exit status returned
 exit 0  
