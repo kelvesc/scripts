@@ -4,11 +4,11 @@
 # Version: 0.1
 
 case $1 in
-    vim)        file=$HOME/.config/nvim/init.vim ;;
-    bspwm)      file=$HOME/.config/bspwm/bspwmrc ;;
-    sxhkd)      file=$HOME/.config/sxhkd/sxhkdrc ;;
-    mksh)       file=$HOME/.mkshrc ;;
+    vi)        file=$HOME/.config/nvim/init.vim ;;
+    wm)      file=$HOME/.config/bspwm/bspwmrc ;;
+    hk)      file=$HOME/.config/sxhkd/sxhkdrc ;;
+    sh)       file=$HOME/.mkshrc ;;
     *)          exit 1 ;;
 esac
 
-vim "$file"
+exec sakura --colorset 1 -x "nvim "$file"" 2> /dev/null &
