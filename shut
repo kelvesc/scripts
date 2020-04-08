@@ -2,17 +2,17 @@
 
 #Author: Kelves C.
 #License: Public Domain
-#Version: 0.5.0-beta
-#Description: this script has the intent to do a summary of system shutdown actions and then ask the user for the action to take
+#Version: 0.5.2-beta
+#Description: shows system shutdown options and executed the selected one
 
 #TODO: a ncurses alternative to non-X instances.
 #TODO: decides alone wheter it is to run either one of the X or non-X options.
 
 buttom_1=$(echo "Poweroff")
-buttom_2=$(echo "Reboot")
-buttom_3=$(echo "Halt")
-buttom_4=$(echo "Suspend")
-buttom_5=$(echo "Hibernate")
+buttom_2=$(echo "Halt")
+buttom_3=$(echo "Suspend")
+buttom_4=$(echo "Hibernate")
+buttom_5=$(echo "Reboot")
 
 # rofi dmenu options explained:
 # -p is for the prompt, the default is "dmenu"
@@ -20,7 +20,7 @@ buttom_5=$(echo "Hibernate")
 # -u is for the nth column be urgent
 
 action=$(echo "$buttom_1\n$buttom_2\n$buttom_3\n$buttom_4\n$buttom_5" | \
-  rofi -theme Pop-Dark -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")
+    rofi -theme Pop-Dark -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")
 
 case "$action" in
   [Pp]oweroff)
