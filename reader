@@ -4,22 +4,21 @@
 # Version: 0.6.0-beta (usable)
 # License: Public Domain
 # Description: 
-# This script has the intent to search through the sub tree
-# of the main directory where the papers are stored and 
-# then launch a pdf reader with the selected paper
+# Search through the subtree of a directory where pdfs are stored
+# and open the selected file in zathura
 
-#targetDir=
-#targetFile=
+LIBRARIES=(/archv/papers)
+
 while true;do
-  targetFile=$(find /mnt /media -type f -name *.pdf | fzf) 
-  if [ -f "$targetFile" ];then
+  PAPER=$(find ${LIBRARIES[@]} -type f -name *.pdf | fzy) 
+  if [ -f "$PAPER" ];then
     # Initializes the pdfreader program
-  	zathura "$targetFile" &
+  	zathura "$PAPER" &
     break
-  elif [ ! -e "$targetFile" ];then
+  elif [ ! -e "$PAPER" ];then
   	    exit 1
   else
-  targetDir="$targetFile"
+  targetDir="$PAPER"
 fi
-done # -d $targetFile 
+done
 exit
