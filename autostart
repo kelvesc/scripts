@@ -6,11 +6,14 @@
 # Description:
 # Wrap up script to start all programs that compose the work evironment 
 # when the xsession starts
+# TODO: reorganize the commands
 
 kblayer 2> $(mktemp -t kblayer.log.XXX) &
 xrdb $HOME/.Xresources 2> $(mktemp -t xrdb.log.XXX) &
 
 [ $(pidof -xs xbanish) ] || setsid xbanish &
+
+[ $(pidof -xs xsetroot) ] || setsid xsetroot -cursor_name left_ptr &
 
 [ $(pidof -xs urxvtd) ] || urxvtd -q -o -f &
 
