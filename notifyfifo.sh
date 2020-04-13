@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# this file should be placed under /bin 
 
 trap 'rm "$PIPE"' 10
 
