@@ -9,7 +9,7 @@ xmodmap -e "clear lock"
 xmodmap -e "keycode 108 = Alt_L"
 xmodmap -e "keycode 34 = bar"
 
-# xset r enables the new values to repete when key is pressed and hold
+# xset r enables the new values to repete even when key is kept pressed
 xset r 66
 xset r 108
 xset r 34
