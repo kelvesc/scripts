@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/sh
 
 # QED: quick edit for the main config file
 # Version: 0.1
@@ -11,4 +11,4 @@ case $1 in
     *)          exit 1 ;;
 esac
 
-exec sakura --colorset 1 -x "nvim "$file"" 2> /dev/null &
+exec sakura -x "nvim "$file"" 2> /dev/null &
