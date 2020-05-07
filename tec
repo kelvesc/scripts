@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/sh
 
 # Simple script to convert DOS linefeed to *NIX linefeed
 
