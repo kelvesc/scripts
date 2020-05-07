@@ -1,12 +1,23 @@
-#!/usr/bin/env sh
+#!/usr/bin/sh
 
 #Author: Kelves C.
 #License: Public Domain
 #Version: 0.5.2-beta
 #Description: shows system shutdown options and executed the selected one
 
-#TODO: a ncurses alternative to non-X instances.
-#TODO: decides alone wheter it is to run either one of the X or non-X options.
+if ! pidof -xs startx 2>&1 1> /dev/null; then
+    options="Poweroff\nHalt\nSuspend\nHibernate\nReboot\n"
+    if which fzy > /dev/null; then
+        action=$(echo -en "$options" | fzy)
+        case $action in
+            Poweroff);;
+            Suspend);;
+            *);;
+        esac
+    fi
+fi
+
+rofi_cmd="rofi -theme Pop-Dark"
 
 buttom_1=$(echo "Poweroff")
 buttom_2=$(echo "Halt")
@@ -14,13 +25,14 @@ buttom_3=$(echo "Suspend")
 buttom_4=$(echo "Hibernate")
 buttom_5=$(echo "Reboot")
 
+#Options="$shutdown\n$suspend\n$hibernate\n$halt\nreboot\n"
 # rofi dmenu options explained:
 # -p is for the prompt, the default is "dmenu"
 # -i is for case insensitive
 # -u is for the nth column be urgent
 
-action=$(echo "$buttom_1\n$buttom_2\n$buttom_3\n$buttom_4\n$buttom_5" | \
-    rofi -theme Pop-Dark -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")
+action="$(echo "$buttom_1\n$buttom_2\n$buttom_3\n$buttom_4\n$buttom_5" | \
+    $rofi_cmd -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")"
 
 case "$action" in
   [Pp]oweroff)
