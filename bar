@@ -1,15 +1,7 @@
 #!/usr/bin/sh
 
-kill $(pidof -s polybar)
-
-# TODO: kill other bar instance by getting its PID
-# to get the pid ps will be used
-# ps hax | awk '/sh/ {print $1}'
-# maybe implement this idea in randomize bg
-# and maybe this script doesn't even need to be like this
-# or even be, as it can run perfectly from a sinlge line in autostart
-
-while pidof -s polybar > /dev/null;do
+kill $(pidof -x polybar) 2>&1 1> /dev/null
+while pidof -s polybar 2>&1 1> /dev/null;do
     sleep 1;done
 
 polybar bar -r &
