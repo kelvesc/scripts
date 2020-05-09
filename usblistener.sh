@@ -12,13 +12,9 @@ check_if_fifo_exists ()
 
 listen_to_fifo ()
 {
-    while true;
-    do
-        if check_if_fifo_exists;
-        then
-            SIGNAL=$(cat "$PIPE")
-            dunstify "$SIGNAL"
-        fi
+    while true; do
+        check_if_fifo_exists && SIGNAL=$(cat "$PIPE")
+        [ $SIGNAL == "" ] && dunstify "$SIGNAL"
         sleep .5
     done
 }
