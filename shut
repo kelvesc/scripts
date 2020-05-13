@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/mksh
 
 #Author: Kelves C.
 #License: Public Domain
@@ -17,35 +17,31 @@ if ! pidof -xs startx 2>&1 1> /dev/null; then
     fi
 fi
 
-rofi_cmd="rofi -theme Pop-Dark"
+rofi_cmd="rofi -theme pmenu"
 
-buttom_1=$(echo "Poweroff")
-buttom_2=$(echo "Halt")
-buttom_3=$(echo "Suspend")
-buttom_4=$(echo "Hibernate")
-buttom_5=$(echo "Reboot")
+POWEROFF=$(echo -e "\UF011")    # poweroff button
+SUSPEND=$(echo -e "\UF186")     # moon button
+HIBERNATE=$(echo -e "\UF0C8")   # square button
+REBOOT=$(echo -e "\UF2EA")      # reboot button
 
-#Options="$shutdown\n$suspend\n$hibernate\n$halt\nreboot\n"
 # rofi dmenu options explained:
 # -p is for the prompt, the default is "dmenu"
 # -i is for case insensitive
 # -u is for the nth column be urgent
 
-action="$(echo "$buttom_1\n$buttom_2\n$buttom_3\n$buttom_4\n$buttom_5" | \
-    $rofi_cmd -lines 1 -width 60 -columns 5 -dmenu -i -u 0 -p "Shut")"
+action="$(printf "%s\\n%s\\n%s\\n%s" $POWEROFF $SUSPEND $HIBERNATE $REBOOT | \
+    $rofi_cmd -lines 1 -width 60 -columns 4 -dmenu -i -u 0 -p "Shut")"
 
 case "$action" in
-  [Pp]oweroff)
-    sudo poweroff;;
-  [Rr]eboot)
-    sudo reboot;;
-  [Hh]alt)
-    sudo halt;;
-  [Ss]uspend)
-    sudo zzz;;
-  [Hh]ibernate)
-    sudo ZZZ;;
-  *)
-    break;;
+    $POWEROFF)
+        sudo poweroff;;
+    $SUSPEND)
+        sudo zzz;;
+    $HIBERNATE)
+        sudo ZZZ;;
+    $REBOOT)
+        sudo reboot;;
+    *)
+        break;;
 esac
 
