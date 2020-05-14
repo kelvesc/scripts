@@ -5,25 +5,25 @@
 # License: Public Domain
 # Description:
 # Sets a background and then randomizes a new one after a couple minutes.
-# TODO:
-# A FIFO where whom this process listen to and sets the wallpapers accordingly.
-# This script must be able to listen and send signals from and to others of it.
+
+#TODO: change script name
+#TODO: set a list of possible directories where wallpapers should be found
 
 # Wallpapers directory
 wallDir=/usr/share/wallpapers
 
 # These signal must be sent to the pid of sleep, not randomize-bg
-trap 'setBackground' 10
-trap 'setBackground' 12 
+trap 'set_background' 10
+trap 'set_background' 12
 
 # Set the wallpaper filling the screen and without a ".fehbg" file
-setBackground() {
+set_background() {
   wallpaper=$(ls -A $wallDir | shuf | sed 1q)
   feh --no-fehbg --bg-scale $wallDir/$wallpaper
 }
 
 while true;do
-  setBackground
-  sleep 240 
+    set_background
+    sleep 240
 done
 
