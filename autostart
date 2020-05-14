@@ -1,32 +1,37 @@
-#!/bin/env sh
+#!/bin/sh
 
 # Author: Kelves C.
-# Version: 0.9.6
+# Version: 0.9.8
 # License: Public Domain
 # Description:
 # Wrap up script to start a set of programs when X starts
 
-kblayer 2> $(mktemp -t kblayer.log.XXX) &
-xrdb $HOME/.Xresources 2> $(mktemp -t xrdb.log.XXX) &
+#TODO: chenge scrit name
 
-[ $(pidof -xs urxvtd) ] || urxvtd -q -o -f &
-
+## Mouse and Keyboard
+kblayer 2>&1 1> $(mktemp -t kblayer.log.XXX) &
+setsid xsetroot -cursor_name left_ptr &
 [ $(pidof -xs xbanish) ] || setsid xbanish &
 
-setsid xsetroot -cursor_name left_ptr &
+## Desktop Environment
+[ $(pidof -xs randomize-bg) ] || \
+(kill $(pidof -x randomize-bg) 2>&1 1> /dev/null || \
+randomize-bg 2>&1 1> $(mktemp -t wall.log.XXX) &)
 
-randomize-bg 2>&1 1> $(mktemp -t wall.log.XXX) &
-
-picom --config=$XDG_CONFIG_HOME/compton/compton.conf \
+picom --config=$XDG_CONFIG_HOME/picom/picom.conf \
     2> $(mktemp -t compton.log.XXX) &
 picomPID=$!
 
 while ! ps -hp $picomPID > /dev/null;do
     sleep 1
 done
-
+unset $Pid_of_Compton
+xrdb $HOME/.Xresources 2>&1 1> $(mktemp -t xrdb.log.XXX)
 bar 2>&1 1> $(mktemp -t bar.log.XXX) &
-[ $(pidof -xs usblistener.sh) ] || usblistener.sh &
 [ $(pidof -xs conky) ] || conky 2>&1 1> $(mktemp -t conky.log.XXX) &
 
-unset $Pid_of_Compton
+## URxvtd
+[ ! $(pidof -xs urxvtd) ] && urxvtd -q -o -f &
+
+exit 0
+
