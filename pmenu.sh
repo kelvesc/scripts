@@ -5,8 +5,6 @@
 #Version: 0.5.4-beta
 #Description: shows system shutdown options and executed the selected one
 
-#TODO: change script name(?)
-
 if ! pidof -xs startx 2>&1 1> /dev/null; then
     options="Poweroff\nHalt\nSuspend\nHibernate\nReboot\n"
     if which fzy > /dev/null; then
