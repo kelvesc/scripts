@@ -16,7 +16,7 @@ xmodmap -e "keycode 108 = Alt_L"    # Alt_GR    -> Alt_L
 xmodmap -e "keycode 34 = bar backslash"       # acute     -> pipe |
 xmodmap -e "keycode 66 = Escape"    # CAPS      -> ESC
 
-xmodmap -e "keysym ccdilla = slash backslash"   # Print     -> PageUP
+xmodmap -e "keysym ccedilla = slash backslash"   # Print     -> PageUP
 xmodmap -e "keysym Print = Prior"   # Print     -> PageUP
 xmodmap -e "keysym Pause = Next"    # Pause     -> PageDown
 xmodmap -e "keysym Insert = Return" # Insert    -> Return

@@ -6,8 +6,6 @@
 # Description:
 # Wrap up script to start a set of programs when X starts
 
-#TODO: chenge scrit name
-
 ## Mouse and Keyboard
 kblayer 2>&1 1> $(mktemp -t kblayer.log.XXX) &
 setsid xsetroot -cursor_name left_ptr &
