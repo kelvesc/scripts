@@ -7,11 +7,12 @@
 # Wrap up script to start a set of programs when X starts
 
 ## Mouse and Keyboard
-kblayer 2>&1 1> $(mktemp -t kblayer.log.XXX) &
+kblayout.sh 2>&1 1> $(mktemp -t kblayout.sh.log.XXX) &
 setsid xsetroot -cursor_name left_ptr &
 [ $(pidof -xs xbanish) ] || setsid xbanish &
 
 ## Desktop Environment
+dps.sh 2>&1 1> $(mktemp -t dps.sh.log.XXX) &
 [ $(pidof -xs randomize-bg) ] || \
 (kill $(pidof -x randomize-bg) 2>&1 1> /dev/null || \
 randomize-bg 2>&1 1> $(mktemp -t wall.log.XXX) &)

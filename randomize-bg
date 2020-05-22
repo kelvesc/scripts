@@ -6,9 +6,6 @@
 # Description:
 # Sets a background and then randomizes a new one after a couple minutes.
 
-#TODO: change script name
-#TODO: set a list of possible directories where wallpapers should be found
-
 # Wallpapers directory
 wallDir=/usr/share/wallpapers
 

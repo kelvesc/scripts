@@ -1,5 +1,7 @@
 #!/usr/bin/sh
 
+# dps.sh: display powersave script
+
 # configure DPMS shutdown:
 if [ $(which xset) ]; then
     xset +dpms
