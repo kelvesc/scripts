@@ -21,7 +21,7 @@ picom --config=$XDG_CONFIG_HOME/picom/picom.conf \
     2> $(mktemp -t compton.log.XXX) &
 picomPID=$!
 
-while ! ps -hp $picomPID > /dev/null;do
+while ! ps -hp $picomPID > /dev/null; do
     sleep 1
 done
 unset $Pid_of_Compton

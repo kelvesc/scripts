@@ -26,7 +26,7 @@ REBOOT=$(echo -e "\UF2EA")      # reboot button
 # rofi dmenu options explained:
 # -p is for the prompt, the default is "dmenu"
 # -u is for the nth column be urgent
-ROFI_CMD="rofi -dmenu -u 0 -a 1 -theme pmenu"
+ROFI_CMD="rofi -dmenu -u 0 -theme pmenu"
 
 action="$(printf "%s\\n%s\\n%s\\n%s" $POWEROFF $SUSPEND $HIBERNATE $REBOOT | \
     $ROFI_CMD)"
