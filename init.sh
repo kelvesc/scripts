@@ -6,28 +6,25 @@
 # Description:
 # Wrap up script to start a set of programs when X starts
 
+## redirect both stdout and stderr to a logfile
+exec 1> $(mktemp -t init.log.XXX) 2>&1
+
 ## Mouse and Keyboard
-kblayout.sh 2>&1 1> $(mktemp -t kblayout.sh.log.XXX) &
+kblayout.sh &
 setsid xsetroot -cursor_name left_ptr &
 [ $(pidof -xs xbanish) ] || setsid xbanish &
 
 ## Desktop Environment
-dps.sh 2>&1 1> $(mktemp -t dps.sh.log.XXX) &
+dps.sh &
 [ $(pidof -xs randomize-bg) ] || \
-(kill $(pidof -x randomize-bg) 2>&1 1> /dev/null || \
-randomize-bg 2>&1 1> $(mktemp -t wall.log.XXX) &)
+(kill $(pidof -xs randomize-bg) || \
+randomize-bg &)
 
-picom --config=$XDG_CONFIG_HOME/picom/picom.conf \
-    2> $(mktemp -t compton.log.XXX) &
-picomPID=$!
+xrdb -quiet -load $HOME/.Xresources; \
+bar &
 
-while ! ps -hp $picomPID > /dev/null; do
-    sleep 1
-done
-unset $Pid_of_Compton
-xrdb $HOME/.Xresources 2>&1 1> $(mktemp -t xrdb.log.XXX)
-bar 2>&1 1> $(mktemp -t bar.log.XXX) &
-[ $(pidof -xs conky) ] || conky 2>&1 1> $(mktemp -t conky.log.XXX) &
+picom -b --config=$XDG_CONFIG_HOME/picom/picom.conf; \
+    [ $(pidof -xs conky) ] || conky &
 
 ## URxvtd
 [ ! $(pidof -xs urxvtd) ] && urxvtd -q -o -f &
