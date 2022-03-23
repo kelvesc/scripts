@@ -1,8 +1,0 @@
-#!/usr/bin/sh
-
-kill $(pidof -x polybar) 2>&1 1> /dev/null
-while pidof -s polybar 2>&1 1> /dev/null;do
-    sleep 1;done
-
-polybar bar -r &
-
