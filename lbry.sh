@@ -3,11 +3,11 @@
 # Author: Kelves C.
 # Version: 0.6.0-beta (usable)
 # License: Public Domain
-# Description: 
+# Description:
 # Search through the subtree of a directory where pdfs are stored
 # and open the selected file in zathura
 
-LIBRARIES=(/archv/papers)
+LIBRARIES=($HOME/papers_lib)
 
 while true;
 do
